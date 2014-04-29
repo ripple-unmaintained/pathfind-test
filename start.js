@@ -42,7 +42,7 @@ var testPathFind = function(host) {
     }
   };
 
-  var file = fs.openSync('./log.csv', 'a');
+  var filename = './log.csv';
 
   remote.connect();
 
@@ -64,7 +64,7 @@ var testPathFind = function(host) {
 
       console.log(log);
       if (error) console.log(error);
-      fs.write(file, log);
+      fs.appendFileSync(filename, log);
 
       remote.disconnect();
     });
