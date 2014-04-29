@@ -1,5 +1,5 @@
+# How to use:
+`npm install`
 
-# Guide
-npm install
-node start.js "s-west.ripple.com"
+`node start.js "s-west.ripple.com"`
 
