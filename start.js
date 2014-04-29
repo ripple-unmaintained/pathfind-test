@@ -42,7 +42,7 @@ var testPathFind = function(host) {
     }
   };
 
-  var file = fs.openSync('./log.txt', 'a');
+  var file = fs.openSync('./log.csv', 'a');
 
   remote.connect();
 
@@ -57,14 +57,14 @@ var testPathFind = function(host) {
       var end = Date.now();
       var duration = end - start;
 
-      var log = ''+start+',';
+      var log = ''+Date().toString()+',';
       log = error ? log+'NOTOK,' : log+'OK,';
       log = log+host+':'+port+','+duration+'\n';
 
 
       console.log(log);
       if (error) console.log(error);
-      file.write(log);
+      fs.write(file, log);
 
       remote.disconnect();
     });
