@@ -19,29 +19,30 @@ var testPathFind = function(host) {
   var pathFind = function(responseCallback) {
     try {
       var currency = 'USD';
-      var amount = ripple.Amount.from_human('1.2 USD')
-      amount.set_issuer('rMNR9SBqBnW5xsj7p49kSCsDSXuibrcwmE');
+      var amount = ripple.Amount.from_human('0.001 USD')
+      amount.set_issuer('rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B');
 
       console.log('Pathfinding...');
 
       // Calculate path
-      remote.request_path_find_create('rPJ78bFzY54HNyuNvBs6Hch9Z3F2MvMjj6',
-                                              'r44SfjdwtQMpzyAML3vJkssHBiQspdMBw9',
+      remote.request_path_find_create('r9cZA1mLK5R5Am25ArfXFmqgNwjZgnfk59',
+                                              'r9cZA1mLK5R5Am25ArfXFmqgNwjZgnfk59',
                                               amount)
       .on('success', function(res) {
         console.log('success');
-        //console.log(res);
-        responseCallback(null);
-      })
-      .on('path_find_all', function(res) {
-        //console.log(res);
-        console.log('path_find');
-        responseCallback(null);
-      })
-      .on('close', function(res) {
-        console.log('Close');
         console.log(res);
+        responseCallback(null);
       })
+      // .on('path_find_all', function(res) {
+      //   //console.log(res);
+      //   console.log('path_find');
+      //   responseCallback(null);
+      // })
+      // .on('close', function(res) {
+      //   console.log('Close');
+      //   console.log(res);
+      //   responseCallback(null);
+      // })
       .on('error', function(err) {
         console.log(err);
         responseCallback(err);
