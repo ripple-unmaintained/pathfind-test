@@ -25,15 +25,26 @@ var testPathFind = function(host) {
       console.log('Pathfinding...');
 
       // Calculate path
-      remote.request_ripple_path_find('rPJ78bFzY54HNyuNvBs6Hch9Z3F2MvMjj6',
+      remote.request_path_find_create('rPJ78bFzY54HNyuNvBs6Hch9Z3F2MvMjj6',
                                               'r44SfjdwtQMpzyAML3vJkssHBiQspdMBw9',
                                               amount)
-      // XXX Handle error response
-      .on('success', function (response_find_path) {
+      .on('success', function(res) {
+        console.log('success');
+        //console.log(res);
         responseCallback(null);
       })
-      .on('error', function (response_find_path) {
-        responseCallback(response_find_path);
+      .on('path_find_all', function(res) {
+        //console.log(res);
+        console.log('path_find');
+        responseCallback(null);
+      })
+      .on('close', function(res) {
+        console.log('Close');
+        console.log(res);
+      })
+      .on('error', function(err) {
+        console.log(err);
+        responseCallback(err);
       })
       .request();
     }
@@ -42,14 +53,7 @@ var testPathFind = function(host) {
     }
   };
 
-  var filename = './log.csv';
-
-  remote.connect();
-
-  // Connected to ripple network
-  remote.on('connect', function () {
-    console.log('Connected');
-
+  var runPathFind = function() {
     var start = Date.now();
 
     // Start pathfind
@@ -67,13 +71,25 @@ var testPathFind = function(host) {
       fs.appendFileSync(filename, log);
 
       remote.disconnect();
+      //return;
     });
+  }
 
+  var filename = './log.csv';
+
+  remote.connect();
+
+  // Connected to ripple network
+  remote.on('connect', function () {
+    console.log('Connected');
+
+    runPathFind();
   });
 
   remote.on('disconnect', function () {
     console.log('Disconnected');
-    remote.connect();
+    //remote.connect();
+    process.kill();
   });
 }
 
